@@ -8,12 +8,14 @@ const firstCaracter = document.querySelectorAll('#firstCaracter label'),
   otherChars = document.querySelector('#others'),
   othersRight = document.querySelector('#othersRight');
 
-if (localStorage.length === 0) {
+if (localStorage.getItem('btn0') === null || localStorage.getItem('btn4') === null) {
   firstCaracter[0].className = 'selected';
   localStorage.setItem('btn0', 's');
   secndCaracter[0].className = 'selected';
   localStorage.setItem('btn4', 's');
-}
+  size.value = 8;
+  localStorage.setItem('passlen', 8);
+} else size.value = localStorage.getItem('passlen');
 
 for (let i = 0; i < firstCaracter.length; i++) {
   firstCaracter[i].onclick = () => {
@@ -22,18 +24,17 @@ for (let i = 0; i < firstCaracter.length; i++) {
         firstCaracter[j].removeAttribute('class');
         localStorage.setItem('btn' + j, 'n');
       }
-      else {
-        firstCaracter[j].className = 'selected';
-        localStorage.setItem('btn' + j, 's');
-      }
+    else {
+      firstCaracter[j].className = 'selected';
+      localStorage.setItem('btn' + j, 's');
+    }
   }
 
   secndCaracter[i].onclick = () => {
     if (secndCaracter[i].className === 'selected') {
       secndCaracter[i].removeAttribute('class');
       localStorage.setItem('btn' + (i + 4), 'n');
-    }
-    else {
+    } else {
       secndCaracter[i].className = 'selected';
       localStorage.setItem('btn' + (i + 4), 's');
     }
@@ -41,50 +42,56 @@ for (let i = 0; i < firstCaracter.length; i++) {
 
   if (localStorage.getItem('btn' + i) === 's')
     firstCaracter[i].className = 'selected';
-  
+
   if (localStorage.getItem('btn' + (i + 4)) === 's')
     secndCaracter[i].className = 'selected';
 }
 
 function generate() {
   let password = '';
-  const numbers = '0123456789',
-    alpha = 'abcdeghijklmnopqrstuvwxyz',
-    ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-    others = '!@#$%&*()_+-=',
-    letters = [];
+  if (size.value !== '0') {
+    const numbers = '0123456789',
+      alpha = 'abcdeghijklmnopqrstuvwxyz',
+      ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      others = '!@#$%&*()_+-=',
+      letters = [];
 
-  if (firstCaracter[0].className === 'selected')
-    password = numbers[parseInt(Math.random() * numbers.length)];
-  else if (firstCaracter[1].className === 'selected')
-    password = ALPHA[parseInt(Math.random() * ALPHA.length)];
-  else if (firstCaracter[2].className === 'selected')
-    password = alpha[parseInt(Math.random() * alpha.length)];
-  else if (firstCaracter[3].className === 'selected')
-    password = others[parseInt(Math.random() * others.length)];
+    if (firstCaracter[0].className === 'selected')
+      password = numbers[parseInt(Math.random() * numbers.length)];
+    else if (firstCaracter[1].className === 'selected')
+      password = ALPHA[parseInt(Math.random() * ALPHA.length)];
+    else if (firstCaracter[2].className === 'selected')
+      password = alpha[parseInt(Math.random() * alpha.length)];
+    else if (firstCaracter[3].className === 'selected')
+      password = others[parseInt(Math.random() * others.length)];
 
-  if (secndCaracter[0].className === 'selected')
-    letters.push(numbers);
-  if (secndCaracter[1].className === 'selected')
-    letters.push(ALPHA);
-  if (secndCaracter[2].className === 'selected')
-    letters.push(alpha);
-  if (secndCaracter[3].className === 'selected')
-    letters.push(others);
-  if (otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, '').length !== 0)
-    letters.push(otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, ''));
+    if (secndCaracter[0].className === 'selected')
+      letters.push(numbers);
+    if (secndCaracter[1].className === 'selected')
+      letters.push(ALPHA);
+    if (secndCaracter[2].className === 'selected')
+      letters.push(alpha);
+    if (secndCaracter[3].className === 'selected')
+      letters.push(others);
+    if (otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, '').length !== 0)
+      letters.push(otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, ''));
 
-  for (let i = 0; i < (letters.length === 0 ? 0 : size.value - 1); i++) {
-    const randomized = letters[parseInt(Math.random() * letters.length)];
-    password += randomized[parseInt(Math.random() * randomized.length)];
+    for (let i = 0; i < (letters.length === 0 ? 0 : size.value - 1); i++) {
+      const randomized = letters[parseInt(Math.random() * letters.length)];
+      password += randomized[parseInt(Math.random() * randomized.length)];
+    }
+
+    btnCopy.setAttribute('data-clipboard-text', password);
   }
-
-  btnCopy.setAttribute('data-clipboard-text', password);
   result.value = password;
 }
 
 otherChars.onkeyup = () => {
   othersRight.setAttribute('title', '!@#$%&*()_+-=' + otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, ''))
+}
+
+size.oninput = () => {
+  localStorage.setItem('passlen', size.value);
 }
 
 new ClipboardJS(btnCopy).on('success', e => {
