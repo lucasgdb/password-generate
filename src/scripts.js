@@ -54,7 +54,8 @@ function generate() {
       alpha = 'abcdeghijklmnopqrstuvwxyz',
       ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
       others = '!@#$%&*()_+-=',
-      letters = [];
+      length = size.value === '' ? 8 : size.value;
+    letters = [];
 
     if (firstCaracter[0].className === 'selected')
       password = numbers[parseInt(Math.random() * numbers.length)];
@@ -76,7 +77,7 @@ function generate() {
     if (otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, '').length !== 0)
       letters.push(otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, ''));
 
-    for (let i = 0; i < (letters.length === 0 ? 0 : size.value - 1); i++) {
+    for (let i = 0; i < (letters.length === 0 ? 0 : length - 1); i++) {
       const randomized = letters[parseInt(Math.random() * letters.length)];
       password += randomized[parseInt(Math.random() * randomized.length)];
     }

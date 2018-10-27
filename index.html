@@ -12,12 +12,12 @@
 
   <body>
     <header>
-      <h1>Gerador de Senhas</h1>
+      <h1>Gerador de Senha</h1>
     </header>
 
     <main>
       <img src="./media/geradordesenha.png" title="Gerador de Senha" />
-      <h1>O Gerador de Senha gera senhas aleatórias de qualquer tamanho.</h1>
+      <h1>Um Gerador de Senha OnLine para todos os usuários da Web</h1>
 
       <section id="firstCaracter">
         <h1>Primeiro Caractere</h1>
@@ -41,7 +41,7 @@
 
       <section>
         <h1>Tamanho</h1>
-        <input id="length" type="number" />
+        <input id="length" type="number" placeholder="8" min="0" />
       </section>
 
       <section>
@@ -49,9 +49,13 @@
         <input id="others" type="text" placeholder="Ex: {}[]^~`´:;/?\°ª" />
       </section>
 
-      <input id="result" type="text" placeholder="Resultado" readonly />
-      <button class="btn" onclick="generate()" title="Gerar Senha">Gerar Senha</button>
-      <button id="copy" class="btn" data-clipboard-text="" title="Copiar senha">Copiar Senha</button>
+      <section>
+        <input id="result" type="text" placeholder="Resultado" readonly />
+        <div class="container">
+          <label onclick="generate()" title="Gerar Senha">Gerar Senha</label>
+          <label id="copy" data-clipboard-text="" title="Copiar senha">Copiar Senha</label>
+        </div>
+      </section>
     </main>
 
     <script async src="./src/scripts.js"></script>
