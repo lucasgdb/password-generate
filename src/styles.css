@@ -31,7 +31,7 @@ header h1 { color: var(--light) }
 
 /* MAIN
 *****************/
-main img {
+main img, .strength {
   position: relative;
   left: 50%;
   transform: translateX(-50%)
@@ -41,42 +41,45 @@ main h1 { font-size: 20px }
 
 main section {
   width: 100%;
+  margin-top: 10px;
   float: left
 }
 
 .container {
   text-align: center;
-  min-height: 50px;
+  min-height: 0;
   position: relative
 }
+.container input {
+  position: relative;
+  left: 0;
+}
 
-main section:nth-last-of-type(5) { margin-top: 50px }
+main section:nth-last-of-type(6) { margin-top: 50px }
 
-main section label {
+label[data-type=button] {
   position: relative;
   background-color: white;
   border: 1px solid #adadad;
   touch-action: manipulation;
   color: #333;
   box-sizing: border-box;
-  padding: 10px 10px;
+  padding: 9px 6px;
   font-size: 17px;
-  -webkit-user-select: none;
-  outline: none
-}
-
-main section label {
+  outline: none;
   margin-left: -5px;
-  line-height: 45px
+  line-height: 40px
 }
 
-main section label:active {
+label { -webkit-user-select: none }
+
+label[data-type=button]:active {
   background-color: #e6e6e6;
   box-shadow: inset 0 3px 5px rgba(0,0,0,.125)
 }
 
 .selected {
-  background-color: #e6e6e6;
+  background-color: #e6e6e6 !important;
   box-shadow: inset 0 3px 5px rgba(0,0,0,.125)
 }
 
@@ -98,20 +101,25 @@ main section input, #result {
 #result {
   width: 80%;
   display: block;
-  margin-top: 20px
+}
+
+.strength {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 30px;
+  height: 30px;
+  background-color: #bdbdbd;
 }
 
 @media (min-width: 768px) {
-  main section {
-    width: 50%
-  }
-  main section:nth-last-of-type(4) { margin-top: 50px }
-  main section:nth-last-of-type(1) { width: 100% }
+  main section { width: 50% }
+
+  main section:nth-last-of-type(5) { margin-top: 50px }
+  main section:nth-last-of-type(1),
+  main section:nth-last-of-type(2) { width: 100% }
 }
 
 @media (min-width: 1024px) {
-  main section label:hover, main section label:hover {
-    background-color: #e6e6e6;
-    cursor: pointer
-  }
+  label, input[type=checkbox] { cursor: pointer }
+  label[data-type=button]:hover { background-color: #e6e6e6; }
 }

@@ -22,20 +22,20 @@
       <section id="firstCaracter">
         <h1>Primeiro Caractere</h1>
         <div class="container">
-          <label title="0-9">Numeral</label>
-          <label title="A-Z">Maiúscula</label>
-          <label title="a-z">Minúscula</label>
-          <label title="!@#$%&*()_+-=">Outro</label>
+          <label data-type="button" title="0-9">Numeral</label>
+          <label data-type="button" title="A-Z">Maiúscula</label>
+          <label data-type="button" title="a-z">Minúscula</label>
+          <label data-type="button" title="!@#$%&*()_+-=">Outro</label>
         </div>
       </section>
 
       <section id="secndCaracter">
         <h1>Outros Caracteres</h1>
         <div class="container">
-          <label title="0-9">Numerais</label>
-          <label title="A-Z">Maiúsculas</label>
-          <label title="a-z">Minúsculas</label>
-          <label id="othersRight" title="!@#$%&*()_+-=">Outros</label>
+          <label data-type="button" title="0-9">Numerais</label>
+          <label data-type="button" title="A-Z">Maiúsculas</label>
+          <label data-type="button" title="a-z">Minúsculas</label>
+          <label data-type="button" id="othersRight" title="!@#$%&*()_+-=">Outros</label>
         </div>
       </section>
 
@@ -50,10 +50,19 @@
       </section>
 
       <section>
-        <input id="result" type="text" placeholder="Resultado" readonly />
         <div class="container">
-          <label onclick="generate()" title="Gerar Senha">Gerar Senha</label>
-          <label id="copy" data-clipboard-text="" title="Copiar senha">Copiar Senha</label>
+          <input type="checkbox" id="equal" /><label for="equal">Excluir Caracteres iguais (aa, ZZ, oo, PP, ii)</label>
+        </div>
+        <div class="container">
+          <input type="checkbox" id="strength" /><label for="strength">Verificar força de Senha</label>
+        </div>
+      </section>
+
+      <section>
+        <input id="result" type="text" placeholder="Resultado" readonly /><div title="Força de Senha" class="strength"></div>
+        <div class="container">
+          <label data-type="button" onclick="generate()" title="Gerar Senha">Gerar Senha</label>
+          <label data-type="button" id="copy" data-clipboard-text="" title="Copiar senha">Copiar Senha</label>
         </div>
       </section>
     </main>

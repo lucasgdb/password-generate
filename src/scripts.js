@@ -6,7 +6,10 @@ const firstCaracter = document.querySelectorAll('#firstCaracter label'),
   result = document.querySelector('#result'),
   btnCopy = document.querySelector('#copy'),
   otherChars = document.querySelector('#others'),
-  othersRight = document.querySelector('#othersRight');
+  othersRight = document.querySelector('#othersRight'),
+  strengthCheck = document.querySelector('#strength'),
+  strength = document.querySelector('.strength'),
+  equal = document.querySelector('#equal');
 
 if (localStorage.getItem('btn0') === null || localStorage.getItem('btn4') === null) {
   firstCaracter[0].className = 'selected';
@@ -15,7 +18,17 @@ if (localStorage.getItem('btn0') === null || localStorage.getItem('btn4') === nu
   localStorage.setItem('btn4', 's');
   size.value = 8;
   localStorage.setItem('passlen', 8);
-} else size.value = localStorage.getItem('passlen');
+  equal.checked = true;
+  localStorage.setItem('equal', 's');
+  strengthCheck.checked = true;
+  localStorage.setItem('strength', 's');
+} else {
+  size.value = localStorage.getItem('passlen');
+  equal.checked = localStorage.getItem('equal') === 's' ? true : false;
+  if (localStorage.getItem('strength') === 's')
+    strengthCheck.checked = true;
+  else strength.style.display = 'none';
+}
 
 for (let i = 0; i < firstCaracter.length; i++) {
   firstCaracter[i].onclick = () => {
@@ -47,6 +60,39 @@ for (let i = 0; i < firstCaracter.length; i++) {
     secndCaracter[i].className = 'selected';
 }
 
+function checkStrength(password = String) {
+  let length = 0;
+
+  length += Math.min(6, password.length) * 10;
+  length += Math.min(2, password.length - password.replace(/[A-Z]/g, '').length) * 5;
+  length += Math.min(2, password.length - password.replace(/[a-z]/g, '').length) * 5;
+  length += Math.min(2, password.length - password.replace(/[0-9]/g, '').length) * 5;
+  length += Math.min(2, password.replace(/[a-zA-Z0-9]/g, '').length) * 5;
+
+  for (let i = 1; i < password.length; i++)
+    if (password[i - 1] === password[i]) {
+      length -= 30;
+      break;
+    }
+
+  if (length < 50) {
+    strength.style.backgroundColor = 'red';
+    strength.setAttribute('title', 'Senha Inaceitável');
+  } else if (length < 60) {
+    strength.style.backgroundColor = 'darkorange';
+    strength.setAttribute('title', 'Senha PÉSSIMA');
+  } else if (length < 80) {
+    strength.style.backgroundColor = 'yellow';
+    strength.setAttribute('title', 'Senha RUIM');
+  } else if (length < 100) {
+    strength.style.backgroundColor = 'lime';
+    strength.setAttribute('title', 'Senha BOA');
+  } else {
+    strength.style.backgroundColor = 'darkgreen';
+    strength.setAttribute('title', 'Senha EXCELENTE');
+  }
+}
+
 function generate() {
   let password = '';
   if (size.value !== '0') {
@@ -63,7 +109,7 @@ function generate() {
       password = ALPHA[parseInt(Math.random() * ALPHA.length)];
     else if (firstCaracter[2].className === 'selected')
       password = alpha[parseInt(Math.random() * alpha.length)];
-    else if (firstCaracter[3].className === 'selected')
+    else
       password = others[parseInt(Math.random() * others.length)];
 
     if (secndCaracter[0].className === 'selected')
@@ -79,11 +125,21 @@ function generate() {
 
     for (let i = 0; i < (letters.length === 0 ? 0 : length - 1); i++) {
       const randomized = letters[parseInt(Math.random() * letters.length)];
-      password += randomized[parseInt(Math.random() * randomized.length)];
+      let letter = randomized[parseInt(Math.random() * randomized.length)];
+
+      if (equal.checked)
+        while (password[i] === letter)
+          letter = randomized[parseInt(Math.random() * randomized.length)];
+
+      password += letter;
     }
 
     btnCopy.setAttribute('data-clipboard-text', password);
   }
+
+  if (strengthCheck.checked)
+    checkStrength(password);
+  
   result.value = password;
 }
 
@@ -93,6 +149,23 @@ otherChars.onkeyup = () => {
 
 size.oninput = () => {
   localStorage.setItem('passlen', size.value);
+}
+
+equal.onchange = () => {
+  if (equal.checked)
+    localStorage.setItem('equal', 's');
+  else localStorage.setItem('equal', 'n');
+}
+
+strengthCheck.onchange = () => {
+  if (strengthCheck.checked) {
+    localStorage.setItem('strength', 's');
+    strength.style.display = 'block';
+  }
+  else {
+    localStorage.setItem('strength', 'n');
+    strength.style.display = 'none';
+  }
 }
 
 new ClipboardJS(btnCopy).on('success', e => {
