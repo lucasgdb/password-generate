@@ -6,7 +6,6 @@ const firstCaracter = document.querySelectorAll('#firstCaracter label'),
   result = document.querySelector('#result'),
   btnCopy = document.querySelector('#copy'),
   otherChars = document.querySelector('#others'),
-  othersRight = document.querySelector('#othersRight'),
   strengthCheck = document.querySelector('#strength'),
   strength = document.querySelector('.strength'),
   equal = document.querySelector('#equal');
@@ -99,7 +98,7 @@ function generate() {
     const numbers = '0123456789',
       alpha = 'abcdeghijklmnopqrstuvwxyz',
       ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-      others = '!@#$%&*()_+-=',
+      others = '!@#$%&*()_+-=' + otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, ''),
       length = size.value === '' ? 8 : size.value;
     letters = [];
 
@@ -109,8 +108,7 @@ function generate() {
       password = ALPHA[parseInt(Math.random() * ALPHA.length)];
     else if (firstCaracter[2].className === 'selected')
       password = alpha[parseInt(Math.random() * alpha.length)];
-    else
-      password = others[parseInt(Math.random() * others.length)];
+    else password = others[parseInt(Math.random() * others.length)];
 
     if (secndCaracter[0].className === 'selected')
       letters.push(numbers);
@@ -120,8 +118,6 @@ function generate() {
       letters.push(alpha);
     if (secndCaracter[3].className === 'selected')
       letters.push(others);
-    if (otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, '').length !== 0)
-      letters.push(otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, ''));
 
     for (let i = 0; i < (letters.length === 0 ? 0 : length - 1); i++) {
       const randomized = letters[parseInt(Math.random() * letters.length)];
@@ -144,7 +140,8 @@ function generate() {
 }
 
 otherChars.onkeyup = () => {
-  othersRight.setAttribute('title', '!@#$%&*()_+-=' + otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, ''))
+  firstCaracter[3].setAttribute('title', '!@#$%&*()_+-=' + otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, ''));
+  secndCaracter[3].setAttribute('title', '!@#$%&*()_+-=' + otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, ''));
 }
 
 size.oninput = () => {
@@ -165,6 +162,11 @@ strengthCheck.onchange = () => {
     localStorage.setItem('strength', 'n');
     strength.style.display = 'none';
   }
+}
+
+document.onkeydown = e => {
+  if (e.which === 71)
+    generate();
 }
 
 new ClipboardJS(btnCopy).on('success', e => {

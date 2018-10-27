@@ -17,7 +17,7 @@
 
     <main>
       <img src="./media/geradordesenha.png" title="Gerador de Senha" />
-      <h1>Um Gerador de Senha OnLine para todos os usuários da Web</h1>
+      <h1>Um Gerador de Senha OnLine e seguro para todos os usuários da Web</h1>
 
       <section id="firstCaracter">
         <h1>Primeiro Caractere</h1>
@@ -30,7 +30,7 @@
       </section>
 
       <section id="secndCaracter">
-        <h1>Outros Caracteres</h1>
+        <h1>Caracteres restantes</h1>
         <div class="container">
           <label data-type="button" title="0-9">Numerais</label>
           <label data-type="button" title="A-Z">Maiúsculas</label>
@@ -45,7 +45,7 @@
       </section>
 
       <section>
-        <h1>Outros Caracteres</h1>
+        <h1>Caracteres adicionais</h1>
         <input id="others" type="text" placeholder="Ex: {}[]^~`´:;/?\°ª" />
       </section>
 
@@ -54,19 +54,22 @@
           <input type="checkbox" id="equal" /><label for="equal">Excluir Caracteres iguais (aa, ZZ, oo, PP, ii)</label>
         </div>
         <div class="container">
-          <input type="checkbox" id="strength" /><label for="strength">Verificar força de Senha</label>
+          <input type="checkbox" id="strength" /><label for="strength">Verificar Força de Senha</label>
         </div>
       </section>
 
       <section>
         <input id="result" type="text" placeholder="Resultado" readonly /><div title="Força de Senha" class="strength"></div>
         <div class="container">
-          <label data-type="button" onclick="generate()" title="Gerar Senha">Gerar Senha</label>
+          <label data-type="button" onclick="generate()" title="Gerar Senha"><ins>G</ins>erar Senha</label>
           <label data-type="button" id="copy" data-clipboard-text="" title="Copiar senha">Copiar Senha</label>
         </div>
       </section>
     </main>
 
+    <footer>
+      <h2>Ferramenta desenvolvida por <a class="effect" href="http://lucasnaja.github.io/portfolio-reactjs/" target="_blank">Lucas Bittencourt</a></h2>
+    </footer>
     <script async src="./src/scripts.js"></script>
   </body>
 
