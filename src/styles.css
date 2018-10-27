@@ -100,7 +100,7 @@ main section input, #result {
 
 #result {
   width: 80%;
-  display: block;
+  display: block
 }
 
 .strength {
@@ -108,7 +108,7 @@ main section input, #result {
   margin-bottom: 5px;
   width: 30px;
   height: 30px;
-  background-color: #bdbdbd;
+  background-color: #bdbdbd
 }
 
 @media (min-width: 768px) {

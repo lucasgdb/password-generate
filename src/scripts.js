@@ -139,7 +139,7 @@ function generate() {
 
   if (strengthCheck.checked)
     checkStrength(password);
-  
+
   result.value = password;
 }
 
@@ -161,8 +161,7 @@ strengthCheck.onchange = () => {
   if (strengthCheck.checked) {
     localStorage.setItem('strength', 's');
     strength.style.display = 'block';
-  }
-  else {
+  } else {
     localStorage.setItem('strength', 'n');
     strength.style.display = 'none';
   }
