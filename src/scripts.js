@@ -165,8 +165,11 @@ strengthCheck.onchange = () => {
 }
 
 document.onkeydown = e => {
-  if (e.which === 71)
-    generate();
+  if (e.which === 71) generate();
+}
+
+document.oncontextmenu = e => {
+  e.preventDefault();
 }
 
 new ClipboardJS(btnCopy).on('success', e => {
