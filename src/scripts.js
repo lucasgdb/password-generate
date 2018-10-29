@@ -16,7 +16,7 @@ if (localStorage.getItem('btn0') === null || localStorage.getItem('btn4') === nu
   secndCaracter[0].className = 'selected';
   localStorage.setItem('btn4', 's');
   size.value = 8;
-  localStorage.setItem('passlen', 8);
+  localStorage.setItem('passlen', 10);
   equal.checked = true;
   localStorage.setItem('equal', 's');
   strengthCheck.checked = true;
@@ -76,7 +76,7 @@ function checkStrength(password = String) {
 
   if (length < 50) {
     strength.style.backgroundColor = 'red';
-    strength.setAttribute('title', 'Senha Inaceitável');
+    strength.setAttribute('title', 'Senha INACEITÁVEL');
   } else if (length < 60) {
     strength.style.backgroundColor = 'darkorange';
     strength.setAttribute('title', 'Senha PÉSSIMA');
@@ -99,8 +99,13 @@ function generate() {
       alpha = 'abcdeghijklmnopqrstuvwxyz',
       ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
       others = '!@#$%&*()_+-=' + otherChars.value.replace(/[a-zA-Z0-9!@#$%&*()_+-=]/g, ''),
-      length = size.value === '' ? 8 : size.value;
+      length = size.value === '' ? 10 : size.value > 2048 ? 2048 : size.value,
     letters = [];
+
+    if (size.value > 2048) {
+      size.value = 2048;
+      localStorage.setItem('passlen', 2048);
+    }
 
     if (firstCaracter[0].className === 'selected')
       password = numbers[parseInt(Math.random() * numbers.length)];
@@ -145,7 +150,7 @@ otherChars.onkeyup = () => {
 }
 
 size.oninput = () => {
-  localStorage.setItem('passlen', size.value);
+  localStorage.setItem('passlen', size.value === '' ? 8 : size.value);
 }
 
 equal.onchange = () => {

@@ -124,6 +124,8 @@ main section input, #result {
   margin-bottom: 8px;
   width: 30px;
   height: 30px;
+  box-shadow: inset 0 0 5px white;
+  border-radius: 50%;
   background-color: #bdbdbd
 }
 
@@ -179,7 +181,7 @@ footer h2 {
   .effect:after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: 1px;
     width: 0;
     height: 2px;
     left: 50%;
