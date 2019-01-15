@@ -1,0 +1,8 @@
+CACHE MANIFEST
+# v0.0.3
+
+CACHE:
+./src/styles.css
+./src/scripts.js
+./images/geradordesenha.png
+./images/icon.ico
