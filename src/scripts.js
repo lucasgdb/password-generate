@@ -99,8 +99,7 @@ function generate() {
     }
   }
 
-  if (strengthCheck.checked)
-    checkStrength(password)
+  checkStrength(password)
 
   result.value = password
 }
